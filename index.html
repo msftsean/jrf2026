@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JRF 2026 · AI Skills for Success</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Libre+Franklin:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #002147;
+      --navy-deep: #001430;
+      --navy-mid: #00306a;
+      --gold:    #C9A84C;
+      --gold-lt: #E8D5A3;
+      --gold-dk: #9a7a2e;
+      --white:   #FFFFFF;
+      --offwhite: #F4F0E8;
+      --gray:    #8a9bb5;
+      --red-muted: #8B1A1A;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Libre Franklin', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy-deep);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(0, 20, 48, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      color: var(--white);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.75rem;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.08);
+    }
+
+    /* ─── HERO ──────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '42';
+      position: absolute;
+      right: -0.05em;
+      top: 50%;
+      transform: translateY(-55%);
+      font-family: var(--font-display);
+      font-size: clamp(16rem, 30vw, 32rem);
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.1s forwards;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.25s forwards;
+      max-width: 900px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-lt);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.55s forwards;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .hero-meta-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .hero-meta-value {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .hero-divider {
+      width: 4rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.65s forwards;
+    }
+
+    .hero-nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.75s forwards;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid rgba(201, 168, 76, 0.35);
+      border-radius: 2px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gold-lt);
+      transition: all 0.25s;
+      background: rgba(201, 168, 76, 0.04);
+    }
+
+    .pill:hover {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    .pill-num {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ─── SECTION WRAPPER ───────────────────────────────────────── */
+    section {
+      padding: 5rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-full {
+      max-width: 100%;
+      padding: 0;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .section-kicker {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-kicker::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+
+    /* ─── TIMELINE ──────────────────────────────────────────────── */
+    .timeline-strip {
+      background: var(--navy);
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 3rem 4rem;
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .timeline-item {
+      padding: 1.5rem 1.5rem;
+      border-left: 1px solid rgba(201, 168, 76, 0.2);
+      position: relative;
+    }
+
+    .timeline-item:first-child { border-left: none; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.5s ease;
+    }
+
+    .timeline-item:hover::before { height: 100%; }
+    .timeline-item:first-child::before { left: 0; }
+
+    .timeline-time {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-sub {
+      font-size: 0.72rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ─── DEMO CARDS ────────────────────────────────────────────── */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .demo-card {
+      background: var(--navy);
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .demo-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--gold);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s ease;
+    }
+
+    .demo-card:hover::before { transform: scaleY(1); }
+    .demo-card:hover { border-color: rgba(201, 168, 76, 0.3); }
+
+    .demo-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .demo-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(201, 168, 76, 0.12);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .demo-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .demo-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-green { background: rgba(34, 120, 60, 0.3); color: #6fcf97; border: 1px solid rgba(111, 207, 151, 0.3); }
+    .badge-blue  { background: rgba(41, 98, 180, 0.3); color: #90cdf4; border: 1px solid rgba(144, 205, 244, 0.3); }
+    .badge-gold  { background: rgba(201, 168, 76, 0.15); color: var(--gold); border: 1px solid rgba(201, 168, 76, 0.3); }
+
+    .demo-duration {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--gray);
+    }
+
+    .demo-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-tool {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-description {
+      font-size: 0.9rem;
+      color: var(--gold-lt);
+      max-width: 60ch;
+      margin-bottom: 2rem;
+    }
+
+    .demo-body {
+      display: none;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      animation: fadeUp 0.4s ease forwards;
+    }
+
+    .demo-card.open .demo-body { display: block; }
+
+    .demo-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      transition: gap 0.2s;
+    }
+
+    .demo-toggle:hover { gap: 0.75rem; }
+
+    .demo-toggle .arrow {
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+
+    .demo-card.open .demo-toggle .arrow { transform: rotate(90deg); }
+
+    /* ─── PHASE BLOCKS ──────────────────────────────────────────── */
+    .phase-block {
+      margin-bottom: 2.5rem;
+    }
+
+    .phase-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .phase-pip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .phase-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .phase-time {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gray);
+      margin-left: auto;
+    }
+
+    .phase-content {
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    .phase-content p {
+      font-size: 0.88rem;
+      color: var(--offwhite);
+      margin-bottom: 0.75rem;
+    }
+
+    .phase-content ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .phase-content ul li {
+      font-size: 0.85rem;
+      color: var(--offwhite);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .phase-content ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.75rem;
+    }
+
+    /* ─── CODE BLOCKS ───────────────────────────────────────────── */
+    .code-block {
+      background: rgba(0, 20, 48, 0.8);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-left: 3px solid var(--gold);
+      border-radius: 2px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      position: relative;
+      overflow-x: auto;
+    }
+
+    .code-block-label {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .code-block pre {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--offwhite);
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--gold);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      border-radius: 1px;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover { background: rgba(201, 168, 76, 0.2); }
+    .copy-btn.copied { color: #6fcf97; border-color: rgba(111, 207, 151, 0.4); }
+
+    /* ─── SPEAKER NOTE ──────────────────────────────────────────── */
+    .speaker-note {
+      background: rgba(201, 168, 76, 0.05);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 2px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .speaker-note-icon {
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .speaker-note p {
+      font-size: 0.82rem;
+      color: var(--gold-lt);
+      font-style: italic;
+      line-height: 1.6;
+      margin: 0 !important;
+    }
+
+    /* ─── ALERT BLOCK ───────────────────────────────────────────── */
+    .alert {
+      border-radius: 2px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.83rem;
+    }
+
+    .alert-warn {
+      background: rgba(139, 26, 26, 0.15);
+      border: 1px solid rgba(139, 26, 26, 0.4);
+      color: #f4a0a0;
+    }
+
+    .alert-info {
+      background: rgba(41, 98, 180, 0.15);
+      border: 1px solid rgba(41, 98, 180, 0.4);
+      color: #90cdf4;
+    }
+
+    /* ─── RUNBOOK SECTION ───────────────────────────────────────── */
+    .runbook-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2px;
+      min-height: 600px;
+    }
+
+    .runbook-sidebar {
+      background: var(--navy);
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      padding: 2rem;
+    }
+
+    .runbook-nav-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .runbook-nav-item:last-child { border-bottom: none; }
+
+    .runbook-nav-item:hover .runbook-nav-label { color: var(--gold); }
+
+    .runbook-nav-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gray);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .runbook-nav-item.active .runbook-nav-label { color: var(--gold); }
+
+    .runbook-nav-time {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: rgba(138, 155, 181, 0.5);
+    }
+
+    .runbook-body {
+      background: var(--navy);
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      border-left: none;
+      padding: 3rem;
+    }
+
+    /* ─── GEAR TABLE ────────────────────────────────────────────── */
+    .gear-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.83rem;
+    }
+
+    .gear-table th {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 0.6rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+    }
+
+    .gear-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--offwhite);
+      vertical-align: top;
+    }
+
+    .gear-table tr:last-child td { border-bottom: none; }
+    .gear-table tr:hover td { background: rgba(201, 168, 76, 0.04); }
+
+    /* ─── CHECKLIST ─────────────────────────────────────────────── */
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.84rem;
+      color: var(--offwhite);
+      padding: 0.6rem 0.75rem;
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 1px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .checklist li:hover { background: rgba(255,255,255,0.03); }
+
+    .check-box {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      border-radius: 1px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .checklist li.checked .check-box {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .checklist li.checked .check-box::after {
+      content: '✓';
+      font-size: 0.65rem;
+      color: var(--navy-deep);
+      font-weight: 700;
+    }
+
+    .checklist li.checked span { 
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    /* ─── AUDIO OPTIONS ─────────────────────────────────────────── */
+    .audio-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .audio-option {
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 2px;
+      padding: 1.25rem;
+      background: rgba(0, 20, 48, 0.5);
+      position: relative;
+    }
+
+    .audio-option.preferred { border-color: rgba(201, 168, 76, 0.4); }
+    .audio-option.preferred::before {
+      content: 'TRY FIRST';
+      position: absolute;
+      top: -1px;
+      right: 0.75rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      background: var(--gold);
+      color: var(--navy-deep);
+      padding: 0.2rem 0.5rem;
+    }
+
+    .audio-opt-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.35rem;
+    }
+
+    .audio-opt-sub {
+      font-size: 0.73rem;
+      color: var(--gray);
+    }
+
+    /* ─── BACKUP SECTION ────────────────────────────────────────── */
+    .backup-banner {
+      background: rgba(139, 26, 26, 0.1);
+      border: 1px solid rgba(139, 26, 26, 0.3);
+      border-left: 3px solid var(--red-muted);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .backup-banner h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #f4a0a0;
+      margin-bottom: 0.5rem;
+    }
+
+    .backup-banner p { font-size: 0.85rem; color: #f4a0a0; opacity: 0.8; }
+
+    /* ─── FOOTER ────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .footer-meta {
+      font-size: 0.7rem;
+      color: var(--gray);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── ANIMATIONS ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 6rem 1.5rem 3rem; }
+      section { padding: 3.5rem 1.5rem; }
+      .timeline-strip { padding: 2rem 1.5rem; }
+      .demo-card { padding: 2rem 1.5rem; }
+      .runbook-grid { grid-template-columns: 1fr; }
+      .runbook-sidebar { border-bottom: none; }
+      .runbook-body { border-left: 1px solid rgba(201, 168, 76, 0.12); }
+      footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────────────── -->
+<nav>
+  <a class="nav-brand" href="#">JRF 2026 <span>· AI Skills for Success</span></a>
+  <ul class="nav-links">
+    <li><a href="#session">Session</a></li>
+    <li><a href="#demos">Demo Scripts</a></li>
+    <li><a href="#runbook">AV Runbook</a></li>
+    <li><a href="#backup">Backup Plan</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-eyebrow">Jackie Robinson Foundation · Annual Conference 2026</div>
+  <h1 class="hero-title">AI Skills<br>for <em>Success</em></h1>
+  <p class="hero-subtitle">Tools and Strategies for Impact</p>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Presenter</span>
+      <span class="hero-meta-value">Sean Gayle</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Date & Time</span>
+      <span class="hero-meta-value">Saturday, March 7 · 1:15 PM</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Duration</span>
+      <span class="hero-meta-value">75 Minutes</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Audience</span>
+      <span class="hero-meta-value">~60 JRF Scholars</span>
+    </div>
+  </div>
+
+  <div class="hero-divider"></div>
+
+  <div class="hero-nav-pills">
+    <a class="pill" href="#demos"><span class="pill-num">01</span> Study Guide Generator</a>
+    <a class="pill" href="#demos"><span class="pill-num">02</span> Voice Interview Coach</a>
+    <a class="pill" href="#demos"><span class="pill-num">03</span> Career Positioning Tool</a>
+    <a class="pill" href="#runbook"><span class="pill-num">↓</span> AV Runbook</a>
+  </div>
+</header>
+
+<!-- ─── TIMELINE ─────────────────────────────────────────────────── -->
+<div id="session" class="timeline-strip">
+  <div class="timeline-grid">
+    <div class="timeline-item">
+      <div class="timeline-time">0:00 – 8:00</div>
+      <div class="timeline-label">Opening</div>
+      <div class="timeline-sub">Title · Sean bio · Pair share</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">8:00 – 23:00</div>
+      <div class="timeline-label">Context</div>
+      <div class="timeline-sub">AI moment · Employer expectations · Ethics traffic light</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">23:00 – 51:00</div>
+      <div class="timeline-label">The 3 Plays</div>
+      <div class="timeline-sub">Live demos · Audience try-time · Ethics thread</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">51:00 – 59:00</div>
+      <div class="timeline-label">Tools & Next Steps</div>
+      <div class="timeline-sub">Tool lineup · Homework assignment</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">59:00 – 75:00</div>
+      <div class="timeline-label">Close</div>
+      <div class="timeline-sub">What AI does vs. what only humans do · Call to action</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── DEMO SCRIPTS ──────────────────────────────────────────────── -->
+<section id="demos">
+  <div class="section-header">
+    <div class="section-kicker">Live Demonstrations</div>
+    <h2 class="section-title">The Three <em>Plays</em></h2>
+  </div>
+
+  <div class="demo-grid">
+
+    <!-- DEMO 1 -->
+    <div class="demo-card" id="demo1">
+      <div class="demo-card-header">
+        <div class="demo-num">01</div>
+        <div class="demo-meta">
+          <div><span class="demo-badge badge-green">Green Light Use</span></div>
+          <div class="demo-duration">⏱ 7 minutes</div>
+        </div>
+      </div>
+      <div class="demo-title">Study Guide Generator</div>
+      <div class="demo-tool">Claude.ai · NotebookLM</div>
+      <p class="demo-description">Paste your syllabus or lecture notes — watch AI organize, compress, and turn raw content into a structured study guide with practice questions in under 30 seconds.</p>
+      <button class="demo-toggle" onclick="toggleDemo('demo1')">
+        View Script <span class="arrow">›</span>
+      </button>
+
+      <div class="demo-body">
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Setup &amp; Framing</div>
+            <div class="phase-time">90 sec</div>
+          </div>
+          <div class="phase-content">
+            <p>Open Claude.ai on your laptop. Project the screen. No setup required — this is the simplest demo.</p>
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"Every one of you is managing four to six courses at once, maybe a job, an org, a family. You don't have time to re-read 80 pages before a midterm. This tool doesn't replace studying — it compresses the path to it."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Live Demo — Paste &amp; Generate</div>
+            <div class="phase-time">2 min</div>
+          </div>
+          <div class="phase-content">
+            <p>Paste a syllabus section or lecture notes excerpt into Claude. Use this prompt:</p>
+            <div class="code-block">
+              <span class="code-block-label">Prompt — Study Guide</span>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
+              <pre>You are a study coach for a college student preparing for a midterm exam.
+
+Based on the notes I'll paste below, create a study guide that includes:
+1. The 5 most important concepts (2-sentence explanation each)
+2. 10 practice questions with answers
+3. A 3-bullet "the night before" review checklist
+
+Here are my notes:
+[PASTE NOTES HERE]</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Audience Try-Time</div>
+            <div class="phase-time">3 min</div>
+          </div>
+          <div class="phase-content">
+            <ul>
+              <li>Have scholars open Claude.ai on their phones</li>
+              <li>Tell them: paste notes from any class they're in right now</li>
+              <li>Walk the room — look at what's being generated</li>
+              <li>Call on one scholar to share what they got</li>
+            </ul>
+            <div class="speaker-note">
+              <span class="speaker-note-icon">⚠️</span>
+              <p>Ethics moment: "Notice the prompt says 'based on my notes' — you fed it YOUR material. That's green light use. You're using AI to organize your thinking, not bypass it. Yellow light would be asking it to write your paper. Red light would be submitting AI output as your own analysis on a graded exam."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Close &amp; Hand Off</div>
+            <div class="phase-time">90 sec</div>
+          </div>
+          <div class="phase-content">
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"This took you 30 seconds. Your TA takes 30 minutes. Neither replaced your brain — but one of them is available at 2am before your exam. Demo two is harder."</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DEMO 2 -->
+    <div class="demo-card" id="demo2">
+      <div class="demo-card-header">
+        <div class="demo-num">02</div>
+        <div class="demo-meta">
+          <div><span class="demo-badge badge-blue">Voice + Text Hybrid</span></div>
+          <div class="demo-duration">⏱ 8 minutes</div>
+        </div>
+      </div>
+      <div class="demo-title">Voice Interview Coach</div>
+      <div class="demo-tool">Claude.ai Mobile · Voice Mode · Mellow Voice</div>
+      <p class="demo-description">A live AI behavioral interview using Claude's voice mode. Volunteer speaks, Claude listens and asks STAR method questions out loud. The room watches NLP happen in real time.</p>
+      <button class="demo-toggle" onclick="toggleDemo('demo2')">
+        View Script <span class="arrow">›</span>
+      </button>
+
+      <div class="demo-body">
+
+        <div class="alert alert-warn">
+          ⚡ AV DEPENDENCY: Claude's voice must route through house speakers. Test Bluetooth pairing to mixer at 12:45 PM. See AV Runbook for full audio setup.
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Pre-Demo Setup (before 1:15 PM)</div>
+            <div class="phase-time">Before session</div>
+          </div>
+          <div class="phase-content">
+            <ul>
+              <li>Claude app open on iPhone 17 Pro Max — Claude Max logged in</li>
+              <li>Voice mode tested — select <strong>Mellow</strong> voice</li>
+              <li>Phone audio verified through house speakers</li>
+              <li>Backup typed prompt ready in Notes app</li>
+              <li>Do Not Disturb ON · Auto-lock set to Never</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Phase 1 — Setup Prompt (typed)</div>
+            <div class="phase-time">30 sec</div>
+          </div>
+          <div class="phase-content">
+            <p>Type this into Claude before activating voice. Ask volunteer for their target role/company type first.</p>
+            <div class="code-block">
+              <span class="code-block-label">Setup Prompt — Type This First</span>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
+              <pre>You are conducting a behavioral interview for a [ROLE] 
+internship at a [COMPANY TYPE].
+
+Interview me using the STAR method. Ask one behavioral 
+question at a time. After I answer, give brief verbal 
+feedback on what was strong and what to sharpen.
+
+Be direct and professional. Start with your first question.</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Phase 2 — Activate Voice Mode</div>
+            <div class="phase-time">30 sec</div>
+          </div>
+          <div class="phase-content">
+            <ul>
+              <li>Tap the soundwave icon in Claude app</li>
+              <li>Briefly show the five voice options to the room</li>
+              <li>Select <strong>Mellow</strong> — clearest for group settings</li>
+              <li>Let Claude speak the first behavioral question out loud</li>
+            </ul>
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"What you're hearing is Claude speaking to us. That's text-to-speech powered by ElevenLabs, running on top of the same model that just read our setup prompt. Watch what it does when [volunteer] answers."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Phase 3 — Volunteer Interview</div>
+            <div class="phase-time">3–4 min</div>
+          </div>
+          <div class="phase-content">
+            <ul>
+              <li>Volunteer speaks their answer — they hold the wireless mic + face the phone</li>
+              <li>Narrate as transcript appears: <em>"Watch the transcript — speech recognition in real time"</em></li>
+              <li>Claude gives verbal feedback — room hears it through speakers</li>
+              <li>Run second question the same way</li>
+              <li><strong>HARD STOP at 2 questions</strong></li>
+            </ul>
+            <div class="alert alert-info">
+              📍 Phone positioning: Place phone on stand 2–3 feet from volunteer, mic side facing them. The volunteer speaks toward phone (Claude hears) AND into wireless mic (room hears). Test this during AV setup.
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Phase 4 — Switch to Text</div>
+            <div class="phase-time">90 sec</div>
+          </div>
+          <div class="phase-content">
+            <p>Tap Stop on voice mode. Type this prompt. Project results on screen.</p>
+            <div class="code-block">
+              <span class="code-block-label">Text Critique Prompt</span>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
+              <pre>Based on the two answers, give me:
+1) Strongest thing about my interview style
+2) ONE thing to fix before my real interview
+3) A better version of my second answer, written out</pre>
+            </div>
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"Voice was the experience. Text is the artifact. Screenshot that critique. Study it tonight. The voice version is memorable — the text version is usable."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">NLP Teaching Moment (word-for-word)</div>
+            <div class="phase-time">30 sec</div>
+          </div>
+          <div class="phase-content">
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"What you just watched is NLP — natural language processing — made real. Three things happened: One, speech recognition converted spoken English to text tokens. Two, language understanding analyzed those tokens against thousands of successful behavioral interview answers. Three, generation produced a response calibrated to what [volunteer] actually said. That full pipeline in under 4 seconds. That is why this technology is changing every interview, every job, every field you're walking into."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Audience Try-Time</div>
+            <div class="phase-time">3 min</div>
+          </div>
+          <div class="phase-content">
+            <ul>
+              <li>Scholars open Claude app on their phones</li>
+              <li>Run Phase 1 setup prompt with their own target role</li>
+              <li>Optional: activate voice mode on their own device</li>
+              <li>Ethics connection: "This tool made national news this week for refusing to cross a line. We'll come back to that."</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DEMO 3 -->
+    <div class="demo-card" id="demo3">
+      <div class="demo-card-header">
+        <div class="demo-num">03</div>
+        <div class="demo-meta">
+          <div><span class="demo-badge badge-gold">Whole Room</span></div>
+          <div class="demo-duration">⏱ 7 minutes</div>
+        </div>
+      </div>
+      <div class="demo-title">Career Positioning Tool</div>
+      <div class="demo-tool">Claude.ai · All Devices · Homework Assignment</div>
+      <p class="demo-description">Every scholar runs this simultaneously. Year, major, dream career, experience — AI returns a personalized roadmap: skills to build, certifications, LinkedIn headline, competitive edge.</p>
+      <button class="demo-toggle" onclick="toggleDemo('demo3')">
+        View Script <span class="arrow">›</span>
+      </button>
+
+      <div class="demo-body">
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Setup &amp; Frame</div>
+            <div class="phase-time">60 sec</div>
+          </div>
+          <div class="phase-content">
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"Everyone get your phone out. Everyone. This one you all run at the same time. I'm going to show you what this looks like and then you're going to run it for yourself. This is also your homework."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">The Prompt — Project &amp; Read Aloud</div>
+            <div class="phase-time">90 sec</div>
+          </div>
+          <div class="phase-content">
+            <div class="code-block">
+              <span class="code-block-label">Career Positioning Prompt — Everyone Runs This</span>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
+              <pre>I am a [YEAR] [MAJOR] student at [SCHOOL] with a goal of 
+working in [DREAM CAREER/INDUSTRY].
+
+My current experience includes: [2-3 bullet points of 
+internships, projects, leadership roles, or skills].
+
+Based on this, give me:
+1. The top 3 skills I need to build in the next 12 months
+2. One certification or credential that would set me apart
+3. The type of internship I should target next
+4. A LinkedIn headline that positions me for this career
+5. My unfair competitive advantage as a [MAJOR] student 
+   pursuing [CAREER]
+
+Be specific. Don't give me generic advice.</pre>
+            </div>
+            <p>Run a demo version for yourself live while scholars fill theirs in.</p>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Room Runs It</div>
+            <div class="phase-time">3 min</div>
+          </div>
+          <div class="phase-content">
+            <ul>
+              <li>Circulate the room while scholars type their prompts</li>
+              <li>Read outputs over shoulders — call out good ones</li>
+              <li>Ask 2–3 scholars to read their LinkedIn headline out loud</li>
+              <li>Emotional moment: let the room sit with seeing themselves reflected back</li>
+            </ul>
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"That is not a generic answer. That is Claude responding to you — your major, your experience, your goal. The scholars who use this every week will graduate with a cleaner story than students who spent four years figuring it out the slow way."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">
+            <div class="phase-pip"></div>
+            <div class="phase-title">Homework Assignment Close</div>
+            <div class="phase-time">60 sec</div>
+          </div>
+          <div class="phase-content">
+            <div class="speaker-note">
+              <span class="speaker-note-icon">🎤</span>
+              <p>"Your homework — and I mean this literally — is to go back to your room tonight, run this with real information about yourself, and save what comes back. Then update it every semester. Not because AI tells you who you are. But because thinking through your own story clearly enough to explain it to a machine will make you better at explaining it to every recruiter, every mentor, every room you walk into."</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── AV RUNBOOK ─────────────────────────────────────────────────── -->
+<section id="runbook" style="padding-bottom: 1rem;">
+  <div class="section-header">
+    <div class="section-kicker">Day-Of Operations</div>
+    <h2 class="section-title">AV <em>Runbook</em></h2>
+  </div>
+</section>
+
+<div style="padding: 0 4rem 5rem; max-width: 1100px; margin: 0 auto;">
+  <div class="runbook-grid">
+    <div class="runbook-sidebar">
+      <div style="font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 1rem;">Sections</div>
+      <a href="#rb-gear" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">Gear to Bring</div>
+        <div class="runbook-nav-time">Pack tonight</div>
+      </a>
+      <a href="#rb-av-ask" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">AV Team Script</div>
+        <div class="runbook-nav-time">Email by Friday AM</div>
+      </a>
+      <a href="#rb-screen" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">Screen Mirroring</div>
+        <div class="runbook-nav-time">12:40 PM</div>
+      </a>
+      <a href="#rb-audio" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">Audio Routing</div>
+        <div class="runbook-nav-time">12:45 PM — critical</div>
+      </a>
+      <a href="#rb-mic" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">Volunteer Mic Test</div>
+        <div class="runbook-nav-time">12:55 PM</div>
+      </a>
+      <a href="#rb-wifi" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">WiFi Contingency</div>
+        <div class="runbook-nav-time">On arrival</div>
+      </a>
+      <a href="#rb-checklist" class="runbook-nav-item" style="text-decoration:none;display:block;">
+        <div class="runbook-nav-label">Pre-Show Checklist</div>
+        <div class="runbook-nav-time">1:10 PM</div>
+      </a>
+    </div>
+
+    <div class="runbook-body">
+
+      <div id="rb-gear" style="margin-bottom: 3rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">Pack Tonight</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem;">Gear List</h3>
+        <table class="gear-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Purpose</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Apple USB-C Digital AV Multiport Adapter (A2119)</strong></td>
+              <td>Wired screen mirroring + HDMI audio out</td>
+              <td><span class="demo-badge badge-gold">Critical</span></td>
+            </tr>
+            <tr>
+              <td>HDMI cable, 6ft minimum</td>
+              <td>Adapter → AV system input</td>
+              <td><span class="demo-badge badge-gold">Critical</span></td>
+            </tr>
+            <tr>
+              <td>USB-C power brick (30W+)</td>
+              <td>Charging passthrough during demo</td>
+              <td><span class="demo-badge badge-gold">Critical</span></td>
+            </tr>
+            <tr>
+              <td>Portable Bluetooth speaker (JBL Flip 7)</td>
+              <td>Audio backup if house system won't pair</td>
+              <td><span class="demo-badge badge-blue">Backup</span></td>
+            </tr>
+            <tr>
+              <td>Small phone stand / ring light holder</td>
+              <td>Position phone mic toward volunteer</td>
+              <td><span class="demo-badge badge-green">Recommended</span></td>
+            </tr>
+            <tr>
+              <td>Laptop + charger</td>
+              <td>Text phase projection + full backup surface</td>
+              <td><span class="demo-badge badge-gold">Critical</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="rb-av-ask" style="margin-bottom: 3rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">Email by Friday Morning</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem;">AV Team Request</h3>
+        <div class="code-block">
+          <span class="code-block-label">Copy and Send This</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre>Hi — I'm presenting in the JRF session from 1:15–2:30 PM Saturday.
+I have specific AV needs beyond a standard laptop connection.
+
+I need confirmed before 1:00 PM:
+
+1. HDMI INPUT at the podium — I have an iPhone 17 Pro Max 
+   with Apple USB-C Digital AV Adapter. Will this work?
+
+2. PHONE AUDIO TO HOUSE SPEAKERS — Does your mixer have 
+   Bluetooth input, OR can you extract audio from HDMI and 
+   route it to house speakers?
+
+3. WIRELESS HANDHELD MIC for an audience volunteer — 
+   needs to be live simultaneously with phone audio.
+
+4. SETUP TIME: 20 minutes starting at 12:40 PM.
+
+Which audio input method works best for your system?</pre>
+        </div>
+      </div>
+
+      <div id="rb-screen" style="margin-bottom: 3rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">12:40 PM</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem;">Screen Mirroring Setup</h3>
+        <div class="phase-content" style="padding-left: 0; border: none;">
+          <ul>
+            <li>Plug Apple USB-C Digital AV Adapter into iPhone 17 Pro Max</li>
+            <li>Connect HDMI cable from adapter to room's HDMI input (podium plate)</li>
+            <li>Screen mirrors automatically — if not, check HDMI input selection on projector</li>
+            <li>Verify landscape orientation mirrors correctly on projector</li>
+            <li>Plug USB-C power brick into adapter's passthrough — confirm phone shows "Charging"</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="rb-audio" style="margin-bottom: 3rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">12:45 PM — Most Critical Step</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem;">Audio Routing</h3>
+        <p style="font-size: 0.85rem; color: var(--gold-lt); margin-bottom: 1.5rem;">Work through these options in order. Stop when one works.</p>
+        <div class="audio-options">
+          <div class="audio-option preferred">
+            <div class="audio-opt-label">A — Bluetooth to Mixer</div>
+            <div class="audio-opt-sub">Settings → Bluetooth → pair to mixer. Have AV tech confirm Claude's voice through house speakers. Adjust input gain.</div>
+          </div>
+          <div class="audio-option">
+            <div class="audio-opt-label">B — HDMI Audio Extraction</div>
+            <div class="audio-opt-sub">Ask AV tech to route HDMI audio from phone to house speakers via matrix switcher. Already connected from screen mirror step.</div>
+          </div>
+          <div class="audio-option">
+            <div class="audio-opt-label">C — Portable BT Speaker</div>
+            <div class="audio-opt-sub">Pair JBL Flip 7 to iPhone via Bluetooth. Place at front of room. JBL Flip 7 at full volume reaches ~40ft clearly.</div>
+          </div>
+          <div class="audio-option">
+            <div class="audio-opt-label">D — Phone Speaker + Mic</div>
+            <div class="audio-opt-sub">Last resort. Place phone face-up, hold wireless mic 6" above speaker. Works but adds echo. Trigger backup plan instead.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="rb-mic" style="margin-bottom: 3rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">12:55 PM</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem;">Volunteer Mic &amp; Phone Positioning</h3>
+        <div class="alert alert-info">
+          📍 The volunteer needs to speak toward the phone (so Claude hears them) AND into the wireless mic (so the room hears them). Position both 2–3 feet from the volunteer. Mark the spot with floor tape.
+        </div>
+        <div class="phase-content" style="padding-left: 0; border: none; margin-top: 1rem;">
+          <ul>
+            <li>Wireless mic → pick up and speak → confirm through house speakers</li>
+            <li>Activate Claude voice mode on phone → Claude speaks → confirm through house speakers</li>
+            <li>BOTH playing simultaneously → confirm no feedback. If feedback: ask AV tech to cut 2–4kHz on phone audio channel</li>
+            <li>Volunteer stands in position → speaks toward phone → confirm Claude transcript appears in real time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="rb-wifi" style="margin-bottom: 3rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">On Arrival</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem;">WiFi Contingency</h3>
+        <table class="gear-table">
+          <thead>
+            <tr><th>Option</th><th>How</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary: Hotel WiFi</strong></td>
+              <td>Get credentials from AV team or front desk on arrival</td>
+              <td>Connect during setup, not at podium</td>
+            </tr>
+            <tr>
+              <td><strong>Backup: iPhone Hotspot</strong></td>
+              <td>Personal Hotspot → laptop connects via hotspot, phone uses 5G cellular directly for Claude</td>
+              <td>Phone cannot simultaneously be the hotspot AND run Claude in the same session</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="rb-checklist" style="margin-bottom: 1rem;">
+        <div class="section-kicker" style="margin-bottom: 1rem;">1:10 PM — 5 Minutes Before</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 1.5rem;">Pre-Show Checklist</h3>
+        <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 1rem;">Click each item to check it off.</p>
+        <ul class="checklist" id="preshow-checklist">
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Screen mirroring live on projector</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Phone charging via passthrough port</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Claude Max logged in, fresh conversation open</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Voice mode tested — tap soundwave icon, confirms activation</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Voice set to Mellow</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Claude audio coming through house speakers</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Wireless mic live at correct volume</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Volunteer mic position marked (floor tape)</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Phone stand positioned correctly</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Do Not Disturb ON — all notifications silenced</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Auto-lock: Settings → Display & Brightness → Never</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Laptop open, backup prompts loaded in Notes app</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Hotel WiFi confirmed or hotspot tested</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"></div><span>Checked status.anthropic.com — Claude servers green</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ─── BACKUP PLAN ────────────────────────────────────────────────── -->
+<section id="backup">
+  <div class="section-header">
+    <div class="section-kicker">Contingency</div>
+    <h2 class="section-title">Backup <em>Plan</em></h2>
+  </div>
+
+  <div class="backup-banner">
+    <h3>⚡ Trigger This If:</h3>
+    <p>Claude servers degraded · Voice mode won't activate · Audio routing unresolvable · Volunteer's voice not reaching Claude reliably</p>
+  </div>
+
+  <div class="demo-card" style="margin-bottom: 2px;">
+    <div class="demo-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Transition Line — Say This Naturally</div>
+    <div class="speaker-note" style="margin-top: 1rem;">
+      <span class="speaker-note-icon">🎤</span>
+      <p>"Here's something worth knowing about any tool you depend on professionally: test it before you need it in front of an audience. I tested this yesterday and it worked perfectly. Today the gods of live demos are testing us. This is actually the most important lesson of the session — AI tools have dependencies. WiFi, servers, device compatibility. Professionals who use AI well know how to adapt in real time. Watch."</p>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <div class="demo-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Typed Interview Coach — Same Outcome, Different Modality</div>
+    <div style="margin-top: 1.5rem;">
+      <div class="code-block">
+        <span class="code-block-label">Backup Prompt — Paste to Claude on Laptop</span>
+        <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        <pre>You are conducting a behavioral interview for a [ROLE] position.
+
+Ask me one behavioral question. After I type my answer in the 
+next message, give me:
+
+1. What was strong about my answer (2 sentences)
+2. The one thing I must improve before my real interview (1 sentence)
+3. A stronger version of my answer written out (3-4 sentences)
+
+Then ask your next question. Start now.</pre>
+      </div>
+      <div class="speaker-note">
+        <span class="speaker-note-icon">🎤</span>
+        <p>"Different modality. Same outcome. The written version is actually the artifact you'd screenshot and study tonight. Voice is the experience. Text is the tool. Both are worth knowing."</p>
+      </div>
+      <p style="font-size: 0.83rem; color: var(--gray); margin-top: 1rem;">Have the volunteer dictate their answer to you → you type it → Claude responds on screen → room reads it. Slower but equally instructive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-brand">JRF 2026 · AI Skills for Success</div>
+  <div class="footer-meta">Sean Gayle · Microsoft SLED AI Engineering · March 7, 2026</div>
+</footer>
+
+<script>
+  // Toggle demo cards
+  function toggleDemo(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+
+  // Copy code blocks
+  function copyCode(btn) {
+    const pre = btn.parentElement.querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // Interactive checklist
+  function toggleCheck(li) {
+    li.classList.toggle('checked');
+  }
+
+  // Smooth active nav on scroll
+  const sections = document.querySelectorAll('section[id], div[id="session"]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.style.color = 'var(--gold)';
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
